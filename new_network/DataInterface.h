@@ -4,7 +4,7 @@
 
 #ifndef MULTIPLECHESS_DATAINTERFACE_H
 #define MULTIPLECHESS_DATAINTERFACE_H
-#include "ByteConverter.h"
+#include "bytes/ByteConverter.h"
 
 class DataInterface {
 public:

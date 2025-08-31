@@ -4,6 +4,7 @@
 
 #ifndef MULTIPLECHESS_COMMON_H
 #define MULTIPLECHESS_COMMON_H
+#include "DataInterface.h"
 
 enum MessageType {
 
@@ -15,17 +16,14 @@ enum MessageFrom {
     CLIENT,
 };
 
-class Message {
-public:
-    char* serialize();
-
-};
-
-
-struct MessagePack {
+struct MessageInfo {
     MessageType type;
     MessageFrom from;
+};
 
+struct MessagePack {
+    MessageInfo info;
+    DataInterface* data;
 };
 
 #endif //MULTIPLECHESS_COMMON_H
