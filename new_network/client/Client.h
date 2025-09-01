@@ -5,6 +5,8 @@
 #ifndef MULTIPLECHESS_CLIENT_H
 #define MULTIPLECHESS_CLIENT_H
 
+#include "../common.h"
+#include "../message.h"
 
 class Client {
 

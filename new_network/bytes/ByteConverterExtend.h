@@ -16,14 +16,20 @@ size_t getSize(T (&)[N]) {
     return N * sizeof(T);
 }
 
-template<typename T, size_t N, typename ...Args>
-size_t getSize(T (&)[N], Args&&...args) {
-    return N*sizeof(T) + getSize(args...);
-}
 
 template<typename T>
 size_t getSize(T*, size_t size) {
     return size * sizeof(T) + sizeof(size_t);
+}
+
+template<typename T>
+size_t getSize(T(&)) {
+    return sizeof(T);
+}
+
+template<typename T, size_t N, typename ...Args>
+size_t getSize(T(&)[N], Args&&...args) {
+    return N*sizeof(T) + getSize(args...);
 }
 
 template<typename T, typename ...Args>
@@ -31,13 +37,9 @@ size_t getSize(T*, size_t size, Args&&... args) {
     return size*sizeof(T) + sizeof(size_t) + getSize(args...);
 }
 
-template<typename T>
-size_t getSize(T&) {
-    return sizeof(T);
-}
 
 template<typename T, typename... Args>
-size_t getSize(T&, Args&&... args) {
+size_t getSize(T(&), Args&&... args) {
     return sizeof(T) + getSize(args...);
 }
 
@@ -109,7 +111,7 @@ void setValue(ByteConverter& byte_converter, T* (&t), size_t (&size)) {
 
 template<typename T>
 void setValue(ByteConverter& byte_converter, T (&t)) {
-    *t = byte_converter.dequeueValue<T>();
+    t = byte_converter.dequeueValue<T>();
 }
 
 template<typename T, typename  ...Args>
@@ -138,7 +140,7 @@ void unpackByteConverter(ByteConverter& byte_converter, Args&&... args) {
 }
 
 template<typename... Args>
-ByteConverter combileByteConverter(Args... args) {
+ByteConverter combineByteConverter(Args... args) {
     size_t size = getSize(args...);
     ByteConverter converter(size);
     converter.extend(args...);

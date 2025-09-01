@@ -13,6 +13,8 @@
 #include <unistd.h>
 #include <netinet/in.h>
 
+#include "../common.h"
+
 std::queue<int> task_queue;
 std::mutex queue_mutex;
 std::condition_variable condition;
@@ -33,9 +35,10 @@ void KQueueServer::setThreadCount(uint32_t count) {
             client_socket = task_queue.front();
             task_queue.pop();
         }
-
-        char buffer[1024];
+        MessageInfo info = MessageInfo();
+        char* buffer = new char[info.getSize()];
         recv(client_socket, buffer, sizeof(buffer), 0);
+
         printf("Worker thread %d received: %s\n", std::this_thread::get_id(), buffer);
         send(client_socket, buffer, strlen(buffer), 0);
     }
@@ -63,8 +66,7 @@ void check(int32_t value, const char* message) {
     }
 }
 
-
-void KQueueServer::start() {
+void KQueueServer::setSocket() {
     listen_socket = socket(AF_INET, SOCK_STREAM, 0);
     check(listen_socket, "socket() error");
     int optVal = 1;
@@ -78,6 +80,12 @@ void KQueueServer::start() {
 
     check(bind(listen_socket, (sockaddr*)&server_addr, sizeof(server_addr)), "bind() error");
     check(listen(listen_socket, SOMAXCONN), "listen() error");
+}
+
+
+void KQueueServer::start() {
+    createThreads();
+    setSocket();
 
     int kq = kqueue();
 

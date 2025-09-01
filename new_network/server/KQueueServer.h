@@ -16,17 +16,15 @@
 class KQueueServer: public ServerInterface {
 private:
     static KQueueServer* instance;
-    int32_t listen_socket = 0;
-    int16_t port = 0;
-    uint32_t thread_count = 1;
-    explicit KQueueServer(int16_t port,uint32_t thread_count = 1):port(port) ,thread_count(thread_count) {};
+    explicit KQueueServer(int16_t port,uint32_t thread_count = 1):ServerInterface(port,thread_count) {};
     ~KQueueServer() = default;
 
 public:
     void setThreadCount(uint32_t count);
     void createThreads() const;
     static KQueueServer* getInstance(int16_t port, uint32_t thread_count = 1);
-    void start();
+    void start() override;
+    void setSocket();
 };
 
 KQueueServer* KQueueServer::instance = nullptr;

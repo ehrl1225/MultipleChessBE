@@ -5,7 +5,7 @@
 #ifndef MULTIPLECHESS_BYTEDATA_H
 #define MULTIPLECHESS_BYTEDATA_H
 #include <cstdint>
-
+#include <cstddef>
 
 class ByteData {
 private:
