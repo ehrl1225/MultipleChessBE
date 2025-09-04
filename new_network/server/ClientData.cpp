@@ -11,3 +11,11 @@ ClientData::ClientData(int32_t socket) {
     id = UUID::generate();
 }
 
+
+int32_t ClientData::getSocket() const {
+    return socket;
+}
+
+std::string ClientData::getId() const {
+    return id;
+}

@@ -13,7 +13,7 @@ class ClientData {
 public:
     explicit ClientData(int32_t socket);
     [[nodiscard]] int32_t getSocket() const;
-    [[nodiscard]] const std::string& getId() const;
+    [[nodiscard]] std::string getId() const;
 };
 
 

@@ -8,6 +8,9 @@
 #include "../chess/ChessPiece.h"
 #include "bytes/ByteConverterExtend.h"
 
+#define MAX_NICKNAME_LENGTH 32
+#define MAX_PASSWORD_LENGTH 72
+
 class ChessPiecePositionRequest: DataInterface {
     size_t getSize() override {
         return 0;
@@ -57,11 +60,33 @@ class ChessPiecePositionVote: DataInterface {
 };
 
 class ChessPiecePromotionVote: DataInterface {
-    int chess_piece_id;
+    int chess_piece_id = 0;
+
+public:
+    ChessPiecePromotionVote() = default;
 };
 
 class ChessRequest: DataInterface {
 
+};
+
+class LoginRequest: DataInterface {
+    char nickname[MAX_NICKNAME_LENGTH]{};
+    char password[MAX_PASSWORD_LENGTH]{};
+
+public:
+    LoginRequest() = default;
+
+    size_t getSize() override {
+        return ::getSize(nickname, password);
+    }
+
+    void deserialize(ByteConverter &byte_converter) override {
+        unpackByteConverter(byte_converter, nickname, password);
+    }
+    ByteConverter serialize() override {
+        return packByteConverter(nickname, password);
+    }
 };
 
 

@@ -8,6 +8,8 @@
 
 class DataInterface {
 public:
+    virtual ~DataInterface() = default;
+
     virtual size_t getSize() = 0;
     virtual ByteConverter serialize() = 0;
     virtual void deserialize(ByteConverter& byte_converter) = 0;

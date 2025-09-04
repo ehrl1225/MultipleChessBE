@@ -18,6 +18,7 @@ public:
     explicit Database();
     void addClient(const ClientData& client);
 
+
 };
 
 

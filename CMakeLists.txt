@@ -4,6 +4,17 @@ project(multipleChess)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include(FetchContent)
+
+FetchContent_Declare(
+        argon2
+        GIT_REPOSITORY  https://github.com/P-H-C/phc-winner-argon2.git
+        GIT_TAG         20190702
+)
+
+FetchContent_MakeAvailable(argon2)
+
+
 add_library(chess chess/Chess.cpp
         chess/ChessBoard.cpp
         chess/ChessPiece.cpp
@@ -44,6 +55,8 @@ add_library(
         new_network/message.h
         new_network/utils/UUID.cpp
         new_network/utils/UUID.h
+        new_network/utils/PasswordHasher.cpp
+        new_network/utils/PasswordHasher.h
 )
 
 add_library(new_client SHARED new_network/client/Client.cpp new_network/client/Client.h)
@@ -63,7 +76,8 @@ add_library(new_server SHARED new_network/server/Server.cpp new_network/server/S
 #add_executable(serverRun network/server.cpp)
 # add_executable(testServer network/kqueue_test.cpp)
 
-
+target_include_directories(network PUBLIC ${argon2_SOURCE_DIR}/include)
+target_link_libraries(network PUBLIC argon2)
 #target_link_libraries(clientRun chess)
 #target_link_libraries(serverRun chess)
 #target_link_libraries(multipleChess chess)

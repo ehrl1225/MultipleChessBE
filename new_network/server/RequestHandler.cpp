@@ -6,3 +6,7 @@
 
 RequestHandler::RequestHandler() {
 }
+
+RequestHandler *RequestHandler::getInstance() {
+    return new RequestHandler();
+}

@@ -7,8 +7,10 @@
 
 
 class RequestHandler {
+    explicit RequestHandler();
 public:
-    RequestHandler();
+    static RequestHandler* getInstance();
+
 };
 
 
