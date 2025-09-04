@@ -11,6 +11,7 @@ protected:
     int32_t listen_socket;
     int16_t port = 0;
     uint32_t thread_count = 0;
+public:
     virtual void start() = 0;
 };
 

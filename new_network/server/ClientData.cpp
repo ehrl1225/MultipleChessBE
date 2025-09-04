@@ -3,3 +3,11 @@
 //
 
 #include "ClientData.h"
+
+#include "../utils/UUID.h"
+
+ClientData::ClientData(int32_t socket) {
+    this->socket = socket;
+    id = UUID::generate();
+}
+

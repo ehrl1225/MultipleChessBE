@@ -19,8 +19,6 @@ std::queue<int> task_queue;
 std::mutex queue_mutex;
 std::condition_variable condition;
 
-#define PORT 9000
-
 void KQueueServer::setThreadCount(uint32_t count) {
     this->thread_count = count;
 }
@@ -75,7 +73,7 @@ void KQueueServer::setSocket() {
     memset(&server_addr, 0, sizeof(server_addr));
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
-    server_addr.sin_port = htons(PORT);
+    server_addr.sin_port = htons(port);
     check(fcntl(listen_socket, F_SETFL, O_NONBLOCK), "fcntl() error");
 
     check(bind(listen_socket, (sockaddr*)&server_addr, sizeof(server_addr)), "bind() error");

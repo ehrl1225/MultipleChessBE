@@ -5,10 +5,15 @@
 #ifndef MULTIPLECHESS_CLIENTDATA_H
 #define MULTIPLECHESS_CLIENTDATA_H
 #include <cstdint>
+#include <string>
 
 class ClientData {
     int32_t socket;
-
+    std::string id;
+public:
+    explicit ClientData(int32_t socket);
+    [[nodiscard]] int32_t getSocket() const;
+    [[nodiscard]] const std::string& getId() const;
 };
 
 
