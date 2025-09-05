@@ -69,7 +69,11 @@ add_library(new_server SHARED new_network/server/Server.cpp new_network/server/S
         new_network/server/Database.cpp
         new_network/server/Database.h
         new_network/server/RequestHandler.cpp
-        new_network/server/RequestHandler.h)
+        new_network/server/RequestHandler.h
+        new_network/server/MemberController.cpp
+        new_network/server/MemberController.h
+        new_network/server/MemberService.cpp
+        new_network/server/MemberService.h)
 
 #add_executable(multipleChess main.cpp)
 #add_executable(clientRun network/client.cpp)

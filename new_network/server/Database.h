@@ -9,15 +9,21 @@
 
 #include "ClientData.h"
 
+using ConstClientDataRef = std::reference_wrapper<const ClientData>;
 
 class Database {
+    static Database* instance;
     std::map<std::string, ClientData> clients;
-
+    explicit Database();
 
 public:
-    explicit Database();
-    void addClient(const ClientData& client);
 
+
+    static Database* getInstance();
+    void addClient(ClientData&& client);
+    std::optional<ConstClientDataRef> findClientByName(const std::string &name);
+    std::optional<ConstClientDataRef> findClientById(const std::string &id);
+    std::vector<ClientData>& getClients();
 
 };
 

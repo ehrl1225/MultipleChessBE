@@ -4,9 +4,15 @@
 
 #include "RequestHandler.h"
 
+RequestHandler *RequestHandler::instance = nullptr;
+
 RequestHandler::RequestHandler() {
 }
 
 RequestHandler *RequestHandler::getInstance() {
-    return new RequestHandler();
+    if (instance != nullptr) {
+        return instance;
+    }
+    instance = new RequestHandler();
+    return instance;
 }

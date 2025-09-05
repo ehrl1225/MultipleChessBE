@@ -8,8 +8,25 @@ Database::Database() {
     clients = {};
 }
 
-
-void Database::addClient(const ClientData& client) {
-    clients.insert({client.getId(), client});
+void Database::addClient(ClientData&& client) {
+    std::string id = client.getId();
+    clients.emplace(id, std::move(client));
 }
 
+
+Database* Database::instance = nullptr;
+Database* Database::getInstance() {
+    if (instance == nullptr) {
+        instance = new Database();
+    }
+    return instance;
+}
+
+std::optional<std::reference_wrapper<const ClientData>> Database::findClientByName(const std::string &name) {
+    for (std::pair<std::string, ClientData> pair: clients) {
+        if (pair.second.getName() == name) {
+            return std::cref(pair.second);
+        }
+    }
+    return std::nullopt;
+}
