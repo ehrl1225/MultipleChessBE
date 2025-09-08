@@ -23,10 +23,18 @@ Database* Database::getInstance() {
 }
 
 std::optional<std::reference_wrapper<const ClientData>> Database::findClientByName(const std::string &name) {
-    for (std::pair<std::string, ClientData> pair: clients) {
+    for (const std::pair<const std::string, ClientData>& pair: clients) {
         if (pair.second.getName() == name) {
             return std::cref(pair.second);
         }
     }
     return std::nullopt;
+}
+
+std::optional<ConstClientDataRef> Database::findClientById(const std::string &id) {
+    return std::cref(clients.find(id)->second);
+}
+
+const std::map<std::string, ClientData>& Database::getClients() {
+    return clients;
 }

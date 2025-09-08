@@ -23,7 +23,7 @@ public:
     void addClient(ClientData&& client);
     std::optional<ConstClientDataRef> findClientByName(const std::string &name);
     std::optional<ConstClientDataRef> findClientById(const std::string &id);
-    std::vector<ClientData>& getClients();
+    const std::map<std::string, ClientData>& getClients();
 
 };
 

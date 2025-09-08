@@ -4,7 +4,7 @@
 
 #include "MemberService.h"
 
-#include "../utils/PasswordHasher.h"
+#include "../../utils/PasswordHasher.h"
 
 MemberService* MemberService::instance = nullptr;
 
@@ -24,8 +24,8 @@ bool MemberService::login(std::string name, std::string password) {
     return verify_password(password, client.getPassword());
 }
 
-void MemberService::registerMember(std::string name, std::string password) {
+void MemberService::registerMember(std::string&& name, std::string&& password) {
     std::string hashed_password = hash_password(password);
-    ClientData newClientData = ClientData(name, hashed_password);
+    ClientData newClientData = ClientData(std::move(name), std::move(hashed_password));
     database->addClient(std::move(newClientData));
 }

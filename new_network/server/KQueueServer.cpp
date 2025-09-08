@@ -13,7 +13,9 @@
 #include <unistd.h>
 #include <netinet/in.h>
 
+#include "RequestHandler.h"
 #include "../common.h"
+#include "../message.h"
 
 std::queue<int> task_queue;
 std::mutex queue_mutex;
@@ -25,6 +27,7 @@ void KQueueServer::setThreadCount(uint32_t count) {
 
 
 [[noreturn]] void worker_thread_func() {
+    RequestHandler* handler = RequestHandler::getInstance();
     while (true) {
         int client_socket;
         {
@@ -33,12 +36,8 @@ void KQueueServer::setThreadCount(uint32_t count) {
             client_socket = task_queue.front();
             task_queue.pop();
         }
-        MessageInfo info = MessageInfo();
-        char* buffer = new char[info.getSize()];
-        recv(client_socket, buffer, sizeof(buffer), 0);
-
-        printf("Worker thread %d received: %s\n", std::this_thread::get_id(), buffer);
-        send(client_socket, buffer, strlen(buffer), 0);
+        MessageInfo info = receiveMessageInstance<MessageInfo>(client_socket);
+        handler->handleRequest(client_socket, info);
     }
 }
 

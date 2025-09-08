@@ -8,7 +8,7 @@
 
 #include "../utils/UUID.h"
 
-ClientData::ClientData(std::string name, std::string password):name(std::move(name)), password(std::move(password)),  id(UUID::generate()) {}
+ClientData::ClientData(std::string name, std::string password):id(UUID::generate()), socket(-1), name(std::move(name)),  password(std::move(password)) {}
 
 
 int32_t ClientData::getSocket() const {

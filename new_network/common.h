@@ -4,7 +4,6 @@
 
 #ifndef MULTIPLECHESS_COMMON_H
 #define MULTIPLECHESS_COMMON_H
-#include "DataInterface.h"
 #include "bytes/ByteConverterExtend.h"
 
 enum MessageType:int32_t {
@@ -35,6 +34,9 @@ enum MessageType:int32_t {
     CHEAT_ACTIVATED,
     CHESS_PIECE_PROMOTION,
     EXIT,
+    // new
+    LOGIN_REQUEST,
+    LOGIN_RESPONSE,
     // message size 표시용
     MESSAGE_TYPE_LENGTH
 };
@@ -44,10 +46,27 @@ enum MessageFrom:int32_t {
     CLIENT,
 };
 
-class MessageInfo: DataInterface {
+enum ResponseStatus:int32_t {
+    SUCCESS,
+    ERROR,
+    FAIL,
+};
+
+class MessageInterface {
+public:
+    virtual ~MessageInterface() = default;
+
+    virtual size_t getSize() = 0;
+    virtual ByteConverter serialize() = 0;
+    virtual void deserialize(ByteConverter& byte_converter) = 0;
+};
+
+class MessageInfo: MessageInterface {
 public:
     MessageType type;
     MessageFrom from;
+    MessageInfo() = default;
+    MessageInfo(MessageType type, MessageFrom from):type(type), from(from) {}
 
     size_t getSize() override {
         return ::getSize(type, from);
@@ -63,7 +82,7 @@ public:
 
 struct MessagePack {
     MessageInfo info;
-    DataInterface* data;
+    MessageInterface* data;
 };
 
 #endif //MULTIPLECHESS_COMMON_H

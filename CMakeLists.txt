@@ -51,7 +51,6 @@ add_library(
         new_network/bytes/ByteData.cpp
         new_network/bytes/ByteData.h
         new_network/bytes/ByteConverterExtend.h
-        new_network/DataInterface.h
         new_network/message.h
         new_network/utils/UUID.cpp
         new_network/utils/UUID.h
@@ -70,10 +69,12 @@ add_library(new_server SHARED new_network/server/Server.cpp new_network/server/S
         new_network/server/Database.h
         new_network/server/RequestHandler.cpp
         new_network/server/RequestHandler.h
-        new_network/server/MemberController.cpp
-        new_network/server/MemberController.h
-        new_network/server/MemberService.cpp
-        new_network/server/MemberService.h)
+        new_network/server/Member/MemberController.cpp
+        new_network/server/Member/MemberController.h
+        new_network/server/Member/MemberService.cpp
+        new_network/server/Member/MemberService.h
+        new_network/server/ResponseHandler.cpp
+        new_network/server/ResponseHandler.h)
 
 #add_executable(multipleChess main.cpp)
 #add_executable(clientRun network/client.cpp)

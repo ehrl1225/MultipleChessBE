@@ -6,7 +6,7 @@
 #define MULTIPLECHESS_MEMBERSERVICE_H
 #include <string>
 
-#include "Database.h"
+#include "../Database.h"
 
 
 class MemberService {
@@ -17,7 +17,7 @@ public:
     static MemberService* getInstance();
 
     bool login(std::string name, std::string password);
-    void registerMember(std::string name, std::string password);
+    void registerMember(std::string&& name, std::string&& password);
 };
 
 
