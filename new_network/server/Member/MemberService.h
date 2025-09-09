@@ -16,8 +16,8 @@ class MemberService {
 public:
     static MemberService* getInstance();
 
-    bool login(std::string name, std::string password);
-    void registerMember(std::string&& name, std::string&& password);
+    bool login(std::string&& name, std::string&& password) const;
+    void registerMember(std::string&& name, std::string&& password) const;
 };
 
 

@@ -15,7 +15,7 @@ class MemberController {
 
 public:
     static MemberController* getInstance();
-    bool login(LoginRequest* login_request);
+    MessageInterface* login(LoginRequest* login_request);
     void registerMember(std::string&& name, std::string&& password);
 };
 

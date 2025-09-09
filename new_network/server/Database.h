@@ -15,12 +15,14 @@ class Database {
     static Database* instance;
     std::map<std::string, ClientData> clients;
     explicit Database();
+    ~Database();
 
 public:
 
 
     static Database* getInstance();
     void addClient(ClientData&& client);
+    void removeClient(ClientData&& client);
     std::optional<ConstClientDataRef> findClientByName(const std::string &name);
     std::optional<ConstClientDataRef> findClientById(const std::string &id);
     const std::map<std::string, ClientData>& getClients();

@@ -13,12 +13,13 @@
 class RequestHandler {
     static RequestHandler* instance;
     explicit RequestHandler();
+    ~RequestHandler();
     MemberController* memberController;
 
 
 public:
     static RequestHandler* getInstance();
-    void handleRequest(int32_t socket, MessageInfo& message_info);
+    MessagePack* handleRequest(int32_t socket, MessageInfo* message_info);
 };
 
 

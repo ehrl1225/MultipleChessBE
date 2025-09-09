@@ -17,8 +17,11 @@ MemberController *MemberController::getInstance() {
     return instance;
 }
 
-bool MemberController::login(LoginRequest* login_request) {
-    return memberService->login(login_request->getNickname(), login_request->getPassword());
+MessageInterface* MemberController::login(LoginRequest* login_request) {
+    if (memberService->login(login_request->getNickname(), login_request->getPassword())) {
+        return new LoginResponse(SUCCESS, "success to login");
+    }
+    return new LoginResponse(FAIL, "fail to login");
 }
 
 void MemberController::registerMember(std::string &&name, std::string &&password) {

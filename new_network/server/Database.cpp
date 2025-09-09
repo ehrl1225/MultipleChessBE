@@ -8,9 +8,22 @@ Database::Database() {
     clients = {};
 }
 
+Database::~Database() {
+    if (instance == nullptr) {
+        return;
+    }
+    delete instance;
+    instance = nullptr;
+}
+
+
 void Database::addClient(ClientData&& client) {
     std::string id = client.getId();
     clients.emplace(id, std::move(client));
+}
+
+void Database::removeClient(ClientData &&client) {
+    clients.erase(client.getId());
 }
 
 

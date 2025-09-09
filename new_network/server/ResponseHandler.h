@@ -13,7 +13,7 @@ class ResponseHandler {
 public:
     static ResponseHandler *getInstance();
 
-    void sendMessage(MessageType messageType, MessageInterface* message, int32_t socket);
+    void sendMessage(MessagePack* messagePack, int32_t socket);
 };
 
 

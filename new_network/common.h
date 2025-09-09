@@ -37,6 +37,8 @@ enum MessageType:int32_t {
     // new
     LOGIN_REQUEST,
     LOGIN_RESPONSE,
+    REGISTER_REQUEST,
+    REGISTER_RESPONSE,
     // message size 표시용
     MESSAGE_TYPE_LENGTH
 };

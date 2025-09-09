@@ -21,13 +21,18 @@ std::queue<int> task_queue;
 std::mutex queue_mutex;
 std::condition_variable condition;
 
+KQueueServer::KQueueServer(int16_t port, uint32_t thread_count):ServerInterface(port,thread_count)  {
+}
+
+
 void KQueueServer::setThreadCount(uint32_t count) {
     this->thread_count = count;
 }
 
 
 [[noreturn]] void worker_thread_func() {
-    RequestHandler* handler = RequestHandler::getInstance();
+    RequestHandler* request_handler = RequestHandler::getInstance();
+    ResponseHandler* response_handler = ResponseHandler::getInstance();
     while (true) {
         int client_socket;
         {
@@ -36,8 +41,11 @@ void KQueueServer::setThreadCount(uint32_t count) {
             client_socket = task_queue.front();
             task_queue.pop();
         }
-        MessageInfo info = receiveMessageInstance<MessageInfo>(client_socket);
-        handler->handleRequest(client_socket, info);
+        MessageInfo* info = receiveMessageInstance<MessageInfo>(client_socket);
+        MessagePack * response = request_handler->handleRequest(client_socket, info);
+        response_handler->sendMessage(response, client_socket);
+        delete response;
+        delete info;
     }
 }
 

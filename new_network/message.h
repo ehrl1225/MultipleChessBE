@@ -38,7 +38,7 @@ void sendMessageInstance(int32_t socket, T* t) {
 }
 
 
-class LoginRequest: MessageInterface {
+class LoginRequest: public MessageInterface {
     char nickname[MAX_NICKNAME_LENGTH]{};
     char password[MAX_PASSWORD_LENGTH]{};
 
@@ -66,7 +66,7 @@ public:
     }
 };
 
-class LoginResponse: MessageInterface {
+class LoginResponse: public MessageInterface {
     ResponseStatus status{};
     std::string message;
 

@@ -8,6 +8,8 @@
 #ifdef __APPLE__
 #include <cstdint>
 
+#include "RequestHandler.h"
+#include "ResponseHandler.h"
 #include "ServerInterface.h"
 
 /**
@@ -16,7 +18,7 @@
 class KQueueServer: public ServerInterface {
 private:
     static KQueueServer* instance;
-    explicit KQueueServer(int16_t port,uint32_t thread_count = 1):ServerInterface(port,thread_count) {};
+    explicit KQueueServer(int16_t port,uint32_t thread_count = 1);
     ~KQueueServer() = default;
 
 public:

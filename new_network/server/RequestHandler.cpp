@@ -21,18 +21,31 @@ RequestHandler *RequestHandler::getInstance() {
     return instance;
 }
 
-void RequestHandler::handleRequest(int32_t socket, MessageInfo &message_info) {
-    switch (message_info.type) {
+RequestHandler::~RequestHandler() {
+    if (instance == nullptr) {
+        return;
+    }
+    delete instance;
+    instance = nullptr;
+}
+
+
+MessagePack* RequestHandler::handleRequest(int32_t socket, MessageInfo* message_info) {
+    switch (message_info->type) {
         case LOGIN_REQUEST: {
-            LoginRequest* login_request = receiveMessageInstance<LoginRequest>(socket);
-            if (!memberController->login(login_request)) {
-                LoginResponse login_response = LoginResponse(FAIL, "fail to login");
-
-                return;
-            }
-
-            LoginResponse login_response = LoginResponse(SUCCESS, "success to login");
+            LoginRequest *login_request = receiveMessageInstance<LoginRequest>(socket);
+            MessageInterface *login_response = memberController->login(login_request);
+            MessagePack* message_pack = new MessagePack{
+                MessageInfo{LOGIN_RESPONSE, SERVER},
+                login_response
+            };
+            return message_pack;
         }
-        default: ;
+        case REGISTER_REQUEST: {
+
+        }
+        default: {
+            return nullptr;
+        }
     }
 }

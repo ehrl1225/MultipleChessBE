@@ -19,12 +19,12 @@ MemberService *MemberService::getInstance() {
 }
 
 
-bool MemberService::login(std::string name, std::string password) {
+bool MemberService::login(std::string&& name, std::string&& password) const {
     const ClientData& client =database->findClientByName(name)->get();
     return verify_password(password, client.getPassword());
 }
 
-void MemberService::registerMember(std::string&& name, std::string&& password) {
+void MemberService::registerMember(std::string&& name, std::string&& password) const {
     std::string hashed_password = hash_password(password);
     ClientData newClientData = ClientData(std::move(name), std::move(hashed_password));
     database->addClient(std::move(newClientData));
